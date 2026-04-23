@@ -8,13 +8,14 @@ import { requireRole } from "./middleware/roleMiddlewware.js";
 import { limiter } from "./utils/rateLimiter.js";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import taskRouter from "./routes/taskRoutes.js";
 dotenv.config();
 
 const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "*",
     credentials: true,
   }),
 );
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
 app.use("/auth", limiter, authRoutes);
+app.use("/tasks", taskRouter);
 app.get("/", (req, res) => {
   res.send("API is running");
 });

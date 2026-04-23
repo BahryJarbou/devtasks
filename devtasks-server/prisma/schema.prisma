@@ -20,11 +20,16 @@ model User {
   role           String   @default("user")
   createdAt      DateTime @default(now())
   refershtokens  RefreshToken[]
+  tasks          Task[]
 }
 
 model Task {
-  id     String @id @default(uuid())
-  title  String
+  id         String  @id @default(uuid())
+  title      String
+  completed  Boolean @default(false)
+  createdAt DateTime @default(now())
+  userId     String
+  user       User    @relation(fields: [userId], references:[id])
 }
 
 model RefreshToken {
