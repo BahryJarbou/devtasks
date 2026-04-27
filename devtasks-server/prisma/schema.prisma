@@ -18,7 +18,7 @@ model User {
   password       String
   role           String   @default("user")
   createdAt      DateTime @default(now())
-  refershtokens  RefreshToken[]
+  refreshtokens  RefreshToken[]
   tasks          Task[]
   habits         Habit[]
   projects       Project[]
