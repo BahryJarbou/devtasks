@@ -21,10 +21,25 @@ export const registerUser = async (
     data: { email, password: hashed, role: role || "user" },
   });
 
-  return {
-    id: user.id,
-    email: user.email,
-  };
+  const accessToken = jwt.sign(
+    { userId: user.id, email: user.email, role: user.role },
+    process.env.JWT_SECRET!,
+    {
+      expiresIn: "15m",
+    },
+  );
+
+  const refreshToken = crypto.randomUUID();
+
+  await prisma.refreshToken.create({
+    data: {
+      token: refreshToken,
+      userId: user.id,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    },
+  });
+
+  return { accessToken, refreshToken };
 };
 
 export const loginUser = async (email: string, password: string) => {
@@ -43,7 +58,7 @@ export const loginUser = async (email: string, password: string) => {
   }
 
   const accessToken = jwt.sign(
-    { userId: user.id, role: user.role },
+    { userId: user.id, email: user.email, role: user.role },
     process.env.JWT_SECRET!,
     {
       expiresIn: "15m",

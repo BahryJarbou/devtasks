@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-primary: #141414;
+  --color-accent: #0070f3;
+  --color-bg: #f5f5f5;
+  --color-card: #ffffff;
+  --color-muted: #888888;
+  --color-line: #e5e5e5;
+}
+
+.technical-grid {
+  background-image:
+    linear-gradient(to right, var(--color-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.react-calendar-heatmap .color-empty {
+  fill: #1f2937; /* gray-800 */
+}
+
+.react-calendar-heatmap .color-scale-1 {
+  fill: #22c55e; /* green-500 */
+}

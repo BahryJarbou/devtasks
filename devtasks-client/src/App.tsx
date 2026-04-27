@@ -1,38 +1,23 @@
 import { Route, Routes } from "react-router";
 import Dashboard from "./pages/Dashboard";
-import { useEffect } from "react";
+import Signup from "./pages/Signup";
+import Login from "./pages/login";
+import Projects from "./pages/Projects";
+import Monitoring from "./pages/Monitoring";
+import SystemLogs from "./pages/SystemLogs";
+import Settings from "./pages/Settings";
 
 function App() {
-  const email = "testuser@test.com";
-  const password = "123456";
-
-  const login = async () => {
-    const res = await fetch("http://localhost:5000/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-      credentials: "include",
-    });
-
-    const data = await res.json();
-    localStorage.setItem("token", data.token);
-  };
-  const testProtected = async () => {
-    const res = await fetch("http://localhost:5000/protected", {
-      credentials: "include",
-    });
-    const data = await res.json();
-    console.log(data.message);
-  };
-  useEffect(() => {
-    login();
-    testProtected();
-  }, []);
-
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
+    <div className="min-h-screen bg-bg selection:bg-accent selection:text-white">
       <Routes>
+        <Route path="signup" element={<Signup />} />
         <Route path="/" element={<Dashboard />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/monitoring" element={<Monitoring />} />
+        <Route path="/logs" element={<SystemLogs />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );

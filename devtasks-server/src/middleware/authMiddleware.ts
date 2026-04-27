@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 export interface Authrequest extends Request {
-  user?: { userId: string; role: string };
+  user?: { userId: string; email: string; role: string };
 }
 
 export const authMiddleware = (
@@ -19,6 +19,7 @@ export const authMiddleware = (
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
       userId: string;
+      email: string;
       role: string;
     };
 

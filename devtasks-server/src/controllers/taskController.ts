@@ -21,7 +21,13 @@ export const createTaskHandler = async (req: Authrequest, res: Response) => {
     const userId = req.user!.userId;
     const data = createTaskSchema.parse(req.body);
 
-    const task = await taskService.createTask(userId, data.title);
+    const task = await taskService.createTask(
+      userId,
+      data.title,
+      data.projectId,
+      data.priority,
+      data.dueDate,
+    );
 
     res.json(task);
   } catch (err) {

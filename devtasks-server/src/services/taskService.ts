@@ -1,4 +1,3 @@
-import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/prisma.js";
 
 export const getTasks = async (userId: string) => {
@@ -8,11 +7,20 @@ export const getTasks = async (userId: string) => {
   });
 };
 
-export const createTask = async (userId: string, title: string) => {
+export const createTask = async (
+  userId: string,
+  title: string,
+  projectId: string,
+  priority: string,
+  dueDate: string,
+) => {
   return prisma.task.create({
     data: {
       title,
       userId,
+      projectId,
+      priority,
+      dueDate: new Date(dueDate),
     },
   });
 };

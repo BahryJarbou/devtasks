@@ -1,33 +1,42 @@
 import express from "express";
+import type { Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import "dotenv/config";
-import { authMiddleware } from "./middleware/authMiddleware.js";
+import {
+  authMiddleware,
+  type Authrequest,
+} from "./middleware/authMiddleware.js";
 import { requireRole } from "./middleware/roleMiddlewware.js";
 import { limiter } from "./utils/rateLimiter.js";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import taskRouter from "./routes/taskRoutes.js";
+import habitRouter from "./routes/habitRoutes.js";
+import projectRouter from "./routes/projectRoutes.js";
 dotenv.config();
 
 const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
     credentials: true,
   }),
 );
+app.set("trust proxy", 1);
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
+app.get("/auth/me", authMiddleware, (req: Authrequest, res: Response) => {
+  res.json({ user: req.user });
+});
 app.use("/auth", limiter, authRoutes);
 app.use("/tasks", taskRouter);
-app.get("/", (req, res) => {
-  res.send("API is running");
-});
-app.get("/protected", authMiddleware, (req, res) => {
+app.use("/habits", habitRouter);
+app.use("/projects", projectRouter);
+app.get("/protected", authMiddleware, (req: Authrequest, res: Response) => {
   res.json({ message: "You are authenticated" });
 });
 
