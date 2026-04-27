@@ -142,7 +142,7 @@ export default function Sidebar({ user, isOpen, onToggle }: SidebarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => onToggle(false)}
-            className="fixed inset-0 bg-primary/20 backdrop-blur-sm z-[100] lg:hidden"
+            className="fixed inset-0 bg-primary/20 backdrop-blur-sm z-100 lg:hidden"
           />
         )}
         {isOpen && (
@@ -152,7 +152,7 @@ export default function Sidebar({ user, isOpen, onToggle }: SidebarProps) {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed left-0 top-0 bottom-0 w-[280px] bg-card border-r border-line z-[101] lg:hidden"
+            className="fixed left-0 top-0 bottom-0 w-70 bg-card border-r border-line z-101 lg:hidden"
           >
             <SidebarContent
               user={user}
