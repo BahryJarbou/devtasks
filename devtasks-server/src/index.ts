@@ -21,7 +21,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://dev-tasks-bahryjarbous-projects.vercel.app/",
+    origin: "https://dev-tasks-bahryjarbous-projects.vercel.app",
     credentials: true,
   }),
 );
