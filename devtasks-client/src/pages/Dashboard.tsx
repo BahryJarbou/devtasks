@@ -26,12 +26,7 @@ import {
   Plus,
 } from "lucide-react";
 import Layout from "../components/Layout";
-import {
-  createProject,
-  deleteProject,
-  getProjects,
-  updateProject,
-} from "../api/projects";
+import { getProjects } from "../api/projects";
 
 const Dashboard = () => {
   const queryClient = useQueryClient();
