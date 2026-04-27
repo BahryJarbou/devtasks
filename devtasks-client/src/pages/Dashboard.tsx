@@ -43,58 +43,6 @@ const Dashboard = () => {
     queryFn: getProjects,
   });
 
-  const createProjectMutation = useMutation({
-    mutationFn: createProject,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
-    },
-  });
-  const toggleProjectMutation = useMutation({
-    mutationFn: ({
-      id,
-      status,
-    }: {
-      id: string;
-      status: "active" | "archived";
-    }) => updateProject(id, { status }),
-    onMutate: async ({ id, status }) => {
-      await queryClient.cancelQueries({ queryKey: ["projects"] });
-      const previousTotal = queryClient.getQueryData<Project[]>(["projects"]);
-      queryClient.setQueryData<Project[]>(["projects"], (old) =>
-        old?.map((project) =>
-          project.id === id ? { ...project, status } : project,
-        ),
-      );
-      return { previousTotal };
-    },
-    onError: (_err, _vars, context) => {
-      queryClient.setQueryData(["projects"], context?.previousTotal);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
-    },
-  });
-
-  const deleteProjectMutation = useMutation({
-    mutationFn: (id: string) => deleteProject(id),
-    onMutate: async (id: string) => {
-      await queryClient.cancelQueries({ queryKey: ["projects"] });
-      const previousProjects = queryClient.getQueryData<Project[]>([
-        "projects",
-      ]);
-      queryClient.setQueryData<Project[]>(["projects"], (old) =>
-        old?.filter((project) => project.id !== id),
-      );
-      return { previousProjects };
-    },
-    onError: (_err, _vars, context) => {
-      queryClient.setQueryData(["projects"], context?.previousProjects);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
-    },
-  });
-
   const { data: habits = [] } = useQuery<Habit[]>({
     queryKey: ["habits"],
     queryFn: getHabits,

@@ -12,8 +12,12 @@ export const getProject = async (id: string) => {
   return res.data;
 };
 
-export const createProject = async (name: string) => {
-  const res = await api.post("/projects", { name }, { withCredentials: true });
+export const createProject = async (name: string, description?: string) => {
+  const res = await api.post(
+    "/projects",
+    { name, description },
+    { withCredentials: true },
+  );
   return res.data;
 };
 
@@ -23,5 +27,5 @@ export const updateProject = async (id: string, data: any) => {
 };
 
 export const deleteProject = async (id: string) => {
-  const res = await api.delete(`/projects/${id}`, { withCredentials: true });
+  await api.delete(`/projects/${id}`, { withCredentials: true });
 };
