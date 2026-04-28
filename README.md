@@ -7,7 +7,7 @@ A high-performance, full-stack task and project management ecosystem built with 
 ### Frontend (Client)
 
 - **Framework:** React 18 (Vite)
-- **Language:** TypeScript (Strict Mode)
+- **Language:** TypeScript (Strict Mode)app
 - **State Management:** TanStack Query (React Query v5) for efficient server-state handling
 - **Styling:** Tailwind CSS v4 + Custom Utility Engine
 - **Animations:** Motion (Framer Motion) for fluid, physics-based transitions
